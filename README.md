@@ -13,4 +13,4 @@ Kumpulan script PowerShell untuk maintenance dan automation Windows. Cocok untuk
 
 ## 🚀 Eksekusi Online
 ```powershell
-irm "https://raw.githubusercontent.com/argadia38/cleanup-windows-update/refs/heads/main/get.ps1" | iex
+irm "https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/get.ps1" | iex

