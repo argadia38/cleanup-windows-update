@@ -20,9 +20,9 @@ Stop-Service bits -Force
 $updatePath = "$env:WINDIR\SoftwareDistribution\Download"
 if (Test-Path $updatePath) {
     Remove-Item "$updatePath\*" -Recurse -Force
-    Write-Output "✅ File sampah berhasil dihapus."
+    Write-Output "File sampah berhasil dihapus."
 } else {
-    Write-Output "⚠️ Folder tidak ditemukan: $updatePath"
+    Write-Output "Folder tidak ditemukan: $updatePath"
 }
 
 # Start layanan
