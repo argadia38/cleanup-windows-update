@@ -23,7 +23,7 @@ Langsung jalankan dari PowerShell(admin):
 irm "https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/get.ps1" | iex
 ```
 
-English:
+### English:
 Clean Windows Tools is a collection of PowerShell scripts to remove Windows Update cache and temporary system files. It helps users free up disk space and maintain optimal Windows performance.
 
 ![Preview Menu CLI](https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/docs/menu.png)
