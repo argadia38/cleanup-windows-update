@@ -1,15 +1,15 @@
 <#
 .SYNOPSIS
-Validasi hash SHA256 dari file untuk memastikan integritas.
+Validasi integritas file dengan hash SHA256.
 
 .PARAMETER FilePath
-Path ke file yang ingin divalidasi.
+Path ke file yang ingin dicek.
 
 .PARAMETER ExpectedHash
 Hash SHA256 yang diharapkan.
 
 .EXAMPLE
-.\validate-hash.ps1 -FilePath ".\cleanup.ps1" -ExpectedHash "ABC123..."
+.\validate-hash.ps1 -FilePath "$env:TEMP\cleanup.ps1" -ExpectedHash "ABC123..."
 #>
 
 param (

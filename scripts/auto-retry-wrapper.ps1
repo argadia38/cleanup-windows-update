@@ -12,7 +12,7 @@ URL webhook untuk kirim status.
 Jumlah maksimum percobaan ulang jika gagal.
 
 .EXAMPLE
-.\auto-retry-wrapper.ps1 -ScriptPath ".\cleanup.ps1" -WebhookUrl "https://your.webhook.url" -MaxRetry 3
+.\auto-retry-wrapper.ps1 -ScriptPath "$env:TEMP\cleanup.ps1" -WebhookUrl "..." -MaxRetry 3
 #>
 
 param (
@@ -32,12 +32,12 @@ $success = $false
 while (-not $success -and $attempt -lt $MaxRetry) {
     $attempt++
     try {
-        Write-Output "🔄 Percobaan ke-$attempt: $ScriptPath"
+        Write-Output "🔄 Percobaan ke-${attempt}: $ScriptPath"
         & $ScriptPath
-        Send-Log "✅ Sukses eksekusi $ScriptPath pada percobaan ke-$attempt"
+        Send-Log "✅ Sukses eksekusi $ScriptPath pada percobaan ke-${attempt}"
         $success = $true
     } catch {
-        Send-Log "❌ Gagal eksekusi $ScriptPath pada percobaan ke-$attempt: $_"
+        Send-Log "❌ Gagal eksekusi $ScriptPath pada percobaan ke-${attempt}: $_"
         Start-Sleep -Seconds 5
     }
 }
