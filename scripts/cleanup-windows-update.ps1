@@ -11,15 +11,6 @@ Author: Arga DevOps
 
 # Konfigurasi
 $updatePath = "$env:WINDIR\SoftwareDistribution\Download"
-$webhook = "https://discord.com/api/webhooks/1432262846384701542/KhIMVaPR86HKOmAH6ULvzfKrYqha_vs0XXKsJ4fjMQ8jsTZjGSgoHBIVujvpJiANprtv"
-
-# Fungsi kirim log
-function Send-Log($msg) {
-    if ($webhook) {
-        $payload = @{ content = $msg } | ConvertTo-Json
-        Invoke-RestMethod -Uri $webhook -Method Post -Body $payload -ContentType "application/json"
-    }
-}
 
 # Eksekusi utama
 try {
@@ -29,18 +20,14 @@ try {
     if (Test-Path $updatePath) {
         Remove-Item "$updatePath\*" -Recurse -Force
         Write-Output "✅ File sampah berhasil dihapus."
-        Send-Log "✅ Cleanup berhasil dihapus pada $(Get-Date)"
     } else {
         Write-Output "⚠️ Folder tidak ditemukan: $updatePath"
-        Send-Log "⚠️ Folder tidak ditemukan: $updatePath"
     }
 
     Start-Service wuauserv
     Start-Service bits
 
     Write-Output "Selesai pada $(Get-Date)"
-    Send-Log "✅ Cleanup selesai pada $(Get-Date)"
 } catch {
     Write-Output "❌ Gagal eksekusi: $_"
-    Send-Log "❌ Gagal eksekusi: $_"
 }

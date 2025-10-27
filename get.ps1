@@ -1,45 +1,56 @@
 <#
 .SYNOPSIS
-Entry point online untuk eksekusi cleanup script via GitHub dengan auto-retry dan logging.
+Menu CLI untuk eksekusi script maintenance Windows dari repo cleanup-windows-update.
 
 .NOTES
 Author: Arga DevOps
 #>
 
-$scriptUrl = "https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/scripts/cleanup-windows-update.ps1"
-$tempPath = "$env:TEMP\cleanup.ps1"
-$webhook = "https://discord.com/api/webhooks/1432262846384701542/KhIMVaPR86HKOmAH6ULvzfKrYqha_vs0XXKsJ4fjMQ8jsTZjGSgoHBIVujvpJiANprtv"
-$maxRetry = 3
+function Show-Menu {
+    Clear-Host
+    Write-Host "===============================" -ForegroundColor Cyan
+    Write-Host "  🧰 Cleanup Windows Toolkit" -ForegroundColor Yellow
+    Write-Host "===============================" -ForegroundColor Cyan
+    Write-Host ""
+    Write-Host "[1] Cleanup Windows Update Cache"
+    Write-Host "[2] Cleanup Temp Files"
+    Write-Host "[3] Run All Maintenance (Run 1 + 2)"
+    Write-Host "[4] Check Activation Status"
+    Write-Host "[0] Exit"
+    Write-Host ""
+}
 
-function Send-Log($msg) {
-    if ($webhook) {
-        $payload = @{ content = $msg } | ConvertTo-Json
-        Invoke-RestMethod -Uri $webhook -Method Post -Body $payload -ContentType "application/json"
+function Run-Option {
+    param ($choice)
+
+    switch ($choice) {
+        '1' {
+            irm "https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/scripts/cleanup-windows-update.ps1" | iex
+        }
+        '2' {
+            irm "https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/scripts/cleanup-temp.ps1" | iex
+        }
+        '3' {
+            irm "https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/scripts/cleanup-windows-update.ps1" | iex
+            irm "https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/scripts/cleanup-temp.ps1" | iex
+        }
+        '4' {
+            slmgr /xpr
+        }
+        '0' {
+            Write-Host "`n👋 Keluar dari menu. Sampai jumpa!" -ForegroundColor Green
+            exit
+        }
+        default {
+            Write-Host "⚠️ Pilihan tidak valid. Coba lagi." -ForegroundColor Red
+        }
     }
 }
 
-$attempt = 0
-$success = $false
-
-while (-not $success -and $attempt -lt $maxRetry) {
-    $attempt++
-    try {
-        Write-Output "📥 Percobaan download ke-$attempt"
-        Invoke-WebRequest -Uri $scriptUrl -OutFile $tempPath
-
-        Write-Output "🚀 Menjalankan script..."
-        & $tempPath
-
-        Send-Log "✅ Cleanup sukses pada percobaan ke-${attempt}: $(Get-Date)"
-        $success = $true
-    } catch {
-        Write-Output "❌ Gagal eksekusi pada percobaan ke-${attempt}: $_"
-        Send-Log "❌ Gagal eksekusi pada percobaan ke-${attempt}: $_"
-        Start-Sleep -Seconds 5
-    }
-}
-
-if (-not $success) {
-    Write-Output "🚨 Gagal setelah $maxRetry percobaan."
-    Send-Log "🚨 Cleanup gagal total setelah $maxRetry percobaan: $(Get-Date)"
-}
+do {
+    Show-Menu
+    $input = Read-Host "Masukkan pilihan [1-4, 0]"
+    Run-Option $input
+    Write-Host "`nTekan Enter untuk kembali ke menu..."
+    [void][System.Console]::ReadLine()
+} while ($true)
