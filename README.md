@@ -2,9 +2,6 @@
 
 Kumpulan script PowerShell untuk membersihkan cache Windows Update, file sementara, dan mengelola layanan Windows Update. Dirancang untuk membantu pengguna menghemat ruang penyimpanan dan menjaga performa Windows tetap optimal.
 
-![Preview Menu CLI](https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/docs/menu.png)
-*(Catatan: Gambar pratinjau mungkin belum menampilkan semua opsi menu terbaru)*
-
 ---
 
 ## 📦 Fitur Utama
@@ -32,7 +29,7 @@ Langsung jalankan dari PowerShell (sebagai Administrator):
 irm "[https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/get.ps1](https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/get.ps1)" | iex
 ```
 ---
-English:
+## English:
 Clean Windows Tools is a collection of PowerShell scripts to remove Windows Update cache, temporary system files, and manage the Windows Update service. It helps users free up disk space and maintain optimal Windows performance.
 
 (Note: The preview image may not show all the latest menu options)
