@@ -8,9 +8,10 @@ Author: Arga DevOps
 
 function Show-Menu {
     Clear-Host
-    Write-Host "===============================" -ForegroundColor Cyan
-    Write-Host "  🧰 Cleanup Windows Toolkit" -ForegroundColor Yellow
-    Write-Host "===============================" -ForegroundColor Cyan
+    Write-Host "╔══════════════════════════════╗" -ForegroundColor DarkGray
+    Write-Host "║    Windows Update Toolkit    ║" -ForegroundColor Cyan
+    Write-Host "╚══════════════════════════════╝" -ForegroundColor DarkGray
+
     Write-Host ""
     Write-Host "[1] Cleanup Windows Update Cache"
     Write-Host "[2] Cleanup Temp Files"
@@ -64,19 +65,22 @@ function Run-Option {
             Write-Host "Mengecek status layanan Windows Update (wuauserv)..." -ForegroundColor Cyan
             try {
                 $service = Get-Service -Name wuauserv -ErrorAction Stop
-                Write-Host "  Nama Layanan: $($service.Name)"
-                Write-Host "  Status        : $($service.Status)"
-                Write-Host "  Startup Type  : $($service.StartupType)"
+                Write-Host "  Nama Layanan : $($service.Name)"
+                Write-Host "  Status       : $($service.Status)"
+                Write-Host "  Startup Type : $($service.StartupType)"
 
-                if ($service.StartupType -eq 'Disabled') {
-                    Write-Host "  Kesimpulan    : Layanan Windows Update saat ini DINONAKTIFKAN." -ForegroundColor Red
+                if ($service.Status -eq 'Stopped' -and $service.StartupType -eq 'Disabled') {
+                    Write-Host "  Kesimpulan   : Layanan Windows Update saat ini DINONAKTIFKAN." -ForegroundColor Red
+                } elseif ($service.Status -eq 'Stopped') {
+                    Write-Host "  Kesimpulan   : Layanan Windows Update TIDAK BERJALAN (Startup: $($service.StartupType))." -ForegroundColor Yellow
                 } else {
-                    Write-Host "  Kesimpulan    : Layanan Windows Update saat ini AKTIF (Startup: $($service.StartupType))." -ForegroundColor Green
+                    Write-Host "  Kesimpulan   : Layanan Windows Update AKTIF dan BERJALAN (Startup: $($service.StartupType))." -ForegroundColor Green
                 }
             } catch {
                 Write-Host "❌ Gagal mendapatkan status layanan: $_" -ForegroundColor Red
             }
         }
+
         '0' {
             Write-Host "`n👋 Keluar dari menu. Sampai jumpa!" -ForegroundColor Green
             exit
