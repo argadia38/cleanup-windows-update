@@ -26,7 +26,7 @@ Kumpulan script PowerShell untuk membersihkan cache Windows Update, file sementa
 Langsung jalankan dari PowerShell (sebagai Administrator):
 
 ```powershell
-irm "[https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/get.ps1](https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/get.ps1)" | iex
+irm "https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/get.ps1" | iex
 ```
 ---
 ## English:
@@ -62,4 +62,4 @@ Run online via irm | iex
 🚀 Run Online
 Execute directly from PowerShell (as Administrator):
 ```powershell
-irm "[https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/get.ps1](https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/get.ps1)" | iex
+irm "https://raw.githubusercontent.com/argadia38/cleanup-windows-update/main/get.ps1" | iex
